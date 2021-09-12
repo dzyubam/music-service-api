@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Scraper{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <h1>Kodprov för Medinet</h1>
+  <p class="lead">av Max Dzyuba</p>
+</div>
+<h3>Lägg till</h3>
+{% for message in form.url.errors %}
+<div><strong>{{ message }}</strong></div>
+{% endfor %}
+
+{% for message in form.keyword.errors %}
+<div><strong>{{ message }}</strong></div>
+{% endfor %}
+
+<form action="/" method="post">
+<fieldset class="form-group">
+{{ form.hidden_tag() }}
+
+<div>
+   {{ form.url.label }}
+   {{ form.url }}
+
+   {{ form.keyword.label }}
+   {{ form.keyword }}
+
+   {{ form.submit }}
+</div>
+
+</fieldset>
+</form>
+
+{% if results %}
+<h3>Alla sparade resultat</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">URL</th>
+            <th scope="col">Sökord</th>
+            <th scope="col">Tid i ms</th>
+            <th scope="col">Tidpunkt i UTC</th>
+            <th scope="col">Antal träffar</th>
+            <th scope="col">Fel eller OK</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for result in results %}
+        <tr>
+           <td>{{result.url}}</td>
+           <td>{{result.keyword}}</td>
+           <td>{{result.elapsed_time_ms}}</td>
+           <td>{{result.executed_on}}</td>
+           <td>{{result.hits}}</td>
+           <td>{{result.error}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
