@@ -13,4 +13,5 @@ app.config.from_object('config')
 
 # Load DB
 from app.database import init_db
+
 init_db()
